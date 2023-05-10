@@ -1,0 +1,41 @@
+https://www.kaggle.com/datasets/rohanrao/formula-1-world-championship-1950-2020?resource=download
+
+circuits.csv = nome dos diversos circutos, localização e pais - acho que nao interessa
+constructor_results.csv = pontos das equipas depois de cada corrida (apaguei porque o _standings tb tem estes dados)
+contructors.csv = equipas/marcas
+constructor_standings.csv = pontos, posição e nr de vitorias das equipas depois de cada corrida
+drivers.csv = pilotos (tem que ser limpo para deixar so os usados depois de 2019)
+drivers_standings.vsv = posição em que os pilotos ficaram em cada corrida, com total de pontos e nr de vitorias
+qualifying.csv = resultados das qualificações, q1 q2 q4, com a posição que eles "ganharam", tempos um bocado fdds mas acho que nao vamos usar
+races.csv = todas as corridas depois de 2019, tem o circuito associado e uns tempos todos fdds
+results.csv = resultados de todas as corridas depois de 2019, com posições, pontos, voltas, tempos, estado em que acabou (pode ser interessante para ver se têm muitos acidentes, avarias ...), tempo e velocidade das voltas mais rapidas
+sprint_results.csv = resultados dos sprints cena nova que nao fazia ideia que existia
+status.csv = todos os estados em um piloto pode "acabar" a corrida
+
+
+
+saber os drivers de uma team:
+	- combinar results com races
+	
+wins no driver standings erradas
+
+para cada race mostrar so os pontos ganhos pelo driver naquela corrida
+	- v2.0 mostrar os acumulativos do driver
+	
+limpar dataset de novo:
+	- corridas 2019-2023
+	- final_driver_standings - so os da ultima corrida de cada epoca
+	- final_team_standings - so os da ultima corrida de cada epoca
+	
+	
+no results a grid é o lugar em que começa
+
+
+prefix team
+select ?name
+where
+	?zzz partipated_in ?season
+	?season year 2019
+	?season had ?driver
+	?driver surname lewis
+	?driver forename hamolton 

@@ -1,0 +1,63 @@
+<!-- 
+  @Author: Eduardo Santos
+  @Date:   2023-04-11 16:38:41
+  @Last Modified by:   Eduardo Santos
+  @Last Modified time: 2023-04-11 16:48:03
+-->
+
+{% extends "base.html" %}
+
+{% block content %}
+
+{% if  data.error is not None %}
+    <div class="alert alert-danger" role="alert">
+        {{ data.error  }}
+    </div>
+{% endif %}
+{% if  data.success is not None %}
+    <div class="alert alert-success" role="alert">
+        {{ data.success }}
+    </div>
+{% endif %}
+
+<div class="container-fluid col-lg-12">
+    <div class="d-flex justify-content-center" style="margin-top: 10rem;">
+
+        <h4 class="col-lg-2">
+            Delete Driver
+        </h4>
+        <div class="col-lg-8">
+
+                <form method="post">
+                    {% csrf_token %}
+                        {% for field in form %}
+                            <p>{{ field.label_tag }}</p>
+                            <div class="form-group" >
+                                {{ field }}
+                            </div>
+                        {% endfor %}
+                    <div class="">
+                        {% for field in form_plan %}
+                            {% if field.name == 'prod' %}
+                                {{ field.has_hidden }}
+                                <p style="color: #ff0000">{{ field.errors}}</p>
+                            {% else %}
+                                <p>{{ field.label_tag }}</p>
+                                <div class="form-group" >
+                                    {{ field }}
+                                    <p style="color: red">{{ field.errors}}</p>
+                                </div>
+                            {% endif %}
+                        {% endfor %}
+                    </div>
+                    <div class="">
+                        <button type="submit" class="btn btn-primary">Delete Driver</button>&nbsp;
+                    </div>
+                </form>
+        </div>
+    </div>
+</div>
+
+
+
+{% endblock %}
