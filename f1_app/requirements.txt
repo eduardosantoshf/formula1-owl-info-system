@@ -1,3 +1,5 @@
 Django==4.1.7
 s4api==1.1.0
 django-widget-tweaks==1.4.12
+SPARQLWrapper==2.0.0
+PyYAML==6.0
