@@ -24,6 +24,12 @@
 @prefix team_final_standing: <http://f1/team_final_standing/id/> .
 @prefix team_final_standing_pred: <http://f1/team_final_standing/pred/> .
 
+@prefix season: <http://f1/season/id/> .
+@prefix season_pred: <http://f1/season/pred/> .
+
+@prefix nationality: <http://f1/nationality/id/> .
+@prefix nationality_pred: <http://f1/nationality/pred/> .
+
 
 ############################ Classes ############################
 
@@ -40,7 +46,7 @@ f1:Team rdf:type rdfs:Class ;
     rdfs:label "Team" .
 
 f1:Driver rdf:type rdfs:Class ;
-    fdrs:label "Standing" .
+    rdfs:label "Standing" .
 
 f1:Nationality rdf:type rdfs:Class ;
     rdfs:label "Nationality".
@@ -63,9 +69,8 @@ f1:Team_final_standing rdf:type rdfs:Class ;
     rdfs:subClassOf f1:Standing .
 
 f1:Qualification rdf:type rdfs:Class ;
-    rdfs:label "Qualification! ;
-    rdfs:subClassOf959501
-     "Race" .
+    rdfs:label "Qualification" ;
+    rdfs:subClassOf "Race" .
 
 f1:Final_race rdf:type rdfs:Class ;
     rdfs:label "Final Race" ;
@@ -73,7 +78,7 @@ f1:Final_race rdf:type rdfs:Class ;
 
 ############################ Season ############################
 ## so pus pred porque ainda nao entendi bem como isto funciona aqui
-pred:year rdf:type rdf:Property ;
+season_pred:year rdf:type rdf:Property ;
     rdfs:domain f1:Season ;
     rdfs:range rdfs:Literal ;
     rdfs:comment "Correspondent year" .
@@ -83,7 +88,7 @@ pred:year rdf:type rdf:Property ;
 
 ############################ Nationality ############################
 
-pred:nationality rdf:type rdf:Property ;
+nationality_pred:nationality rdf:type rdf:Property ;
     rdfs:domain f1:Nationality ;
     rdfs:range rdfs:Literal ;
     rdfs:comment "The nationality" .
