@@ -1,7 +1,7 @@
 # @Author: Eduardo Santos
 # @Date:   2023-05-11 23:40:47
 # @Last Modified by:   Eduardo Santos
-# @Last Modified time: 2023-05-21 15:26:19
+# @Last Modified time: 2023-05-23 16:58:08
 ---
 {
   "Sebastian Vettel": Sebastian_Vettel,
@@ -10,10 +10,10 @@
   "Lance Stroll": Lance_Stroll,
   "Sergio Pérez": Sergio_Pérez,
   "Pierre Gasly": Pierre_Gasly,
-  "Carlos Sainz": Carlos_Sainz_Jr.,
+  "Carlos Sainz": Carlos_Sainz_Jr\.,
   "Kevin Magnussen": Kevin_Magnussen,
   "Charles Leclerc": Charles_Leclerc,
-  "George Russell": George_Russell,
+  "George Russell": George_Russell_\(racing_driver\),
   "Max Verstappen": Max_Verstappen,
   "Romain Grosjean": Romain_Grosjean,
   "Mick Schumacher": Mick_Schumacher,
@@ -21,7 +21,7 @@
   "Esteban Ocon": Esteban_Ocon,
   "Nicholas Latifi": Nicholas_Latifi,
   "Nico Hülkenberg": Nico_Hülkenberg,
-  "Alexander Albon": Alexander_Albon,
+  "Alexander Albon": Alex_Albon,
   "Robert Kubica": Robert_Kubica,
   "Kimi Räikkönen": Kimi_Räikkönen,
   "Yuki Tsunoda": Yuki_Tsunoda,
@@ -29,7 +29,7 @@
   "Daniil Kvyat": Daniil_Kvyat,
   "Antonio Giovinazzi": Antonio_Giovinazzi,
   "Nikita Mazepin": Nikita_Mazepin,
-  "Guanyu Zhou": Guanyu_Zhou,
+  "Zhou Guanyu": Zhou_Guanyu,
   "Pietro Fittipaldi": Pietro_Fittipaldi,
   "Nyck de Vries": Nyck_de_Vries,
   "Jack Aitken": Jack_Aitken,

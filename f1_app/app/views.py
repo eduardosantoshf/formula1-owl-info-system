@@ -2,7 +2,7 @@
 # @Author: Eduardo Santos
 # @Date:   2023-04-11 16:20:38
 # @Last Modified by:   Eduardo Santos
-# @Last Modified time: 2023-04-11 17:38:22
+# @Last Modified time: 2023-05-27 15:22:38
 
 from django.http import HttpRequest
 from django.shortcuts import render, redirect
@@ -134,10 +134,11 @@ def drivers(request):
             for driver in drivers:
                 championships = standings_queries.pilot_total_championships(driver[0])
                 drivers_history[driver[0]] = sorted(drivers_queries.get_pilot_teams(driver[0]), key=lambda x: x[1], reverse=True)
+
                 if championships:
-                    final_drivers.append((driver[0], driver[1],  driver[2],  driver[3], championships[4]))
+                    final_drivers.append((driver[0], driver[1],  driver[2],  driver[3], championships[4], driver[4]))
                 else:
-                    final_drivers.append((driver[0], driver[1],  driver[2],  driver[3], '0'))
+                    final_drivers.append((driver[0], driver[1],  driver[2],  driver[3], '0', driver[4]))
             
             sorted_list = sorted(final_drivers, key=lambda x: x[4], reverse=True)
 
