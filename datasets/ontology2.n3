@@ -30,6 +30,8 @@
 @prefix nationality: <http://f1/nationality/id/> .
 @prefix nationality_pred: <http://f1/nationality/pred/> .
 
+@prefix pred: <http://f1/pred/> .
+
 
 ############################ Classes ############################
 
@@ -88,7 +90,7 @@ season_pred:year rdf:type rdf:Property ;
 
 ############################ Nationality ############################
 
-nationality_pred:nationality rdf:type rdf:Property ;
+pred:nat rdf:type rdf:Property ;
     rdfs:domain f1:Nationality ;
     rdfs:range rdfs:Literal ;
     rdfs:comment "The nationality" .
