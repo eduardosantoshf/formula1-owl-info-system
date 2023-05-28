@@ -2,7 +2,7 @@
   @Author: Eduardo Santos
   @Date:   2023-04-11 14:02:17
   @Last Modified by:   Eduardo Santos
-  @Last Modified time: 2023-05-27 15:37:31
+  @Last Modified time: 2023-05-28 01:14:02
 -->
 {%  extends "base.html" %}
 
@@ -28,10 +28,13 @@
                     <h5 class="card-title">{{ i.2 }} {{ i.1 }}</h5>
                 </div>
                 <ul class="list-group list-group-flush">
+                    <li class="list-group-item">Age: {{ i.4 }}</li>
+                </ul>
+                <ul class="list-group list-group-flush">
                     <li class="list-group-item">Nationality: {{ i.3 }}</li>
                 </ul>
                 <ul class="list-group list-group-flush">
-                    <li class="list-group-item">Championships won: {{ i.4 }}</li>
+                    <li class="list-group-item">Championships won: {{ i.5 }}</li>
                 </ul>
                 <div class="modal" id="{{i.0}}" tabindex="-1" role="dialog">
                     <div class="modal-dialog" role="document">
@@ -69,7 +72,7 @@
                         </div>
                         <div class="modal-body">
                             <div style="text-align: center; margin-bottom: 1.5rem;">{{ i.2 }} {{ i.1 }}</div>
-                            {{ i.5 }}
+                            {{ i.6 }}
                         </div>
                         <div class="modal-footer">
                             <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>

@@ -2,15 +2,17 @@
 # @Author: Eduardo Santos
 # @Date:   2023-04-11 14:02:17
 # @Last Modified by:   Eduardo Santos
-# @Last Modified time: 2023-05-27 15:34:55
+# @Last Modified time: 2023-05-28 01:11:57
 import json
 from s4api.graphdb_api import GraphDBApi
 from s4api.swagger import ApiClient
 from difflib import SequenceMatcher
 from SPARQLWrapper import SPARQLWrapper2
+from datetime import datetime
 import re
 import yaml
 import os
+import re
 
 dirname, filename = os.path.split(os.path.abspath(__file__))
 print("running from", dirname)
@@ -98,6 +100,7 @@ def get_pilots_bio():
 
 DRIVERS_BIO = get_pilots_bio()
 
+
 """ Get information for a specific pilot
 
     Parameters
@@ -154,6 +157,22 @@ def get_pilot_info(name):
     else:
         return []
     
+def get_pilot_age(driver):
+    # Define a regular expression pattern to match the birthdate
+        pattern = r"born (\d{1,2} \w+ \d{4})"
+
+        # Search for the birthdate pattern in the text
+        match = re.search(pattern, DRIVERS_BIO[driver])
+
+        if match:
+            birthdate_str = match.group(1)
+            birthdate = datetime.strptime(birthdate_str, "%d %B %Y").date()
+            today = datetime.today().date()
+            age = today.year - birthdate.year - ((today.month, today.day) < (birthdate.month, birthdate.day))
+
+            return age
+        else:
+            print("Birthdate not found.")
 
 
 """ Get all pilots
@@ -191,11 +210,14 @@ def list_all_pilots():
     pilots = []
     for pilot in data:
         pilot_name = f"{pilot['surname']['value']} {pilot['forename']['value']}" if pilot['surname']['value'] != "Guanyu" else f"{pilot['forename']['value']} {pilot['surname']['value']}"
-        pilots +=  [(pilot['driver_code']['value'], pilot['forename']['value'], pilot['surname']['value'], pilot['nationality']['value'], DRIVERS_BIO[pilot_name])]
-        
-    print("pilots: ", pilots)
+
+        # get driver's age
+        age = get_pilot_age(pilot_name)            
+
+        pilots +=  [(pilot['driver_code']['value'], pilot['forename']['value'], pilot['surname']['value'], pilot['nationality']['value'], age, DRIVERS_BIO[pilot_name])]
     
     return(pilots)
+
 
 """ Get all pilots for a specific season
 
