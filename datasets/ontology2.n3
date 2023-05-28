@@ -1,6 +1,9 @@
 @prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
 
+@prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix owl2: <http://www.w3.org/2006/12/owl2#> .
+
 @prefix f1: <http://f1/> .
 
 @prefix driver: <http://f1/driver/id/> .
@@ -24,12 +27,6 @@
 @prefix team_final_standing: <http://f1/team_final_standing/id/> .
 @prefix team_final_standing_pred: <http://f1/team_final_standing/pred/> .
 
-@prefix season: <http://f1/season/id/> .
-@prefix season_pred: <http://f1/season/pred/> .
-
-@prefix nationality: <http://f1/nationality/id/> .
-@prefix nationality_pred: <http://f1/nationality/pred/> .
-
 @prefix pred: <http://f1/pred/> .
 
 
@@ -50,11 +47,26 @@ f1:Team rdf:type rdfs:Class ;
 f1:Driver rdf:type rdfs:Class ;
     rdfs:label "Standing" .
 
-f1:Nationality rdf:type rdfs:Class ;
-    rdfs:label "Nationality".
+f1:Veteran a owl:Class ;
+    rdfs:label "Veteran" ;
+    rdfs:subClassOf [ a owl:Restriction ;
+    owl:intersectionOf (f1:Driver
+            [ a owl:Restriction ;
+            owl:minCardinality "3"^^<http://www.w3.org/2001/XMLSchema#int>;
+            owl:onProperty driver_pred:signed_for ;
+            owl:onClass f1:Contract
+        ])
+    ] .
 
-f1:Season rdf:type rdfs:Class ;
-    rdfs:label "Season".
+f1:Champion a owl:Class ;
+    rdfs:label "Champion" ;
+    rdfs:subClassOf [ a owl:Restriction ;
+    owl:intersectionOf (f1:Driver
+            [ a owl:Restriction ;
+            owl:minCardinality "1"^^<http://www.w3.org/2001/XMLSchema#int>;
+            owl:onProperty driver_pred:champs ;
+        ])
+    ] .
 
 ########################## Sub Classes ##########################
 
@@ -70,34 +82,19 @@ f1:Team_final_standing rdf:type rdfs:Class ;
     rdfs:label "Team Final Standings" ;
     rdfs:subClassOf f1:Standing .
 
-f1:Qualification rdf:type rdfs:Class ;
-    rdfs:label "Qualification" ;
-    rdfs:subClassOf "Race" .
-
-f1:Final_race rdf:type rdfs:Class ;
-    rdfs:label "Final Race" ;
-    rdfs:subClassOf "Race" .
-
-############################ Season ############################
-## so pus pred porque ainda nao entendi bem como isto funciona aqui
-season_pred:year rdf:type rdf:Property ;
-    rdfs:domain f1:Season ;
-    rdfs:range rdfs:Literal ;
-    rdfs:comment "Correspondent year" .
-
-
-## aqui podiamos ter o driver e a team que ganhou, nao sei 
-
-############################ Nationality ############################
-
-pred:nat rdf:type rdf:Property ;
-    rdfs:domain f1:Nationality ;
-    rdfs:range rdfs:Literal ;
-    rdfs:comment "The nationality" .
-
-## acho que com isto é mais facil fazer aquele grafico que tinhamos das nacionalidades
 
 ############################ Drivers ############################
+
+
+driver_pred:years rdf:type rdf:Property ;
+    rdfs:domain f1:Veteran;
+    rdfs:range rdf:Literal ;
+    rdfs:comment "Years of experience" .
+
+driver_pred:champs rdf:type rdf:Property ;
+    rdfs:domain f1:Champion;
+    rdfs:range rdf:Literal ;
+    rdfs:comment "Number of championships" .
 
 driver_pred:code rdf:type rdf:Property ;
     rdfs:domain f1:Driver ;
@@ -116,7 +113,7 @@ driver_pred:forename rdf:type rdf:Property ;
 
 driver_pred:nationality rdf:type rdf:Property ;
     rdfs:domain f1:Driver ;
-    rdfs:range f1:Nationality ;
+    rdfs:range rdfs:Literal ;
     rdfs:comment "References the nationality of the driver" .
 
 #### isto aqui acho que conseguimos usar owl
@@ -227,7 +224,7 @@ team_pred:name rdf:type rdf:Property ;
 
 team_pred:nationality rdf:type rdf:Property ;
     rdfs:domain f1:Team ;
-    rdfs:range f1:Nationality ;
+    rdfs:range rdfs:Literal ;
     rdfs:comment "The team nationality" .
 
 ### deve dar para usar owl
