@@ -2,7 +2,7 @@
 # @Author: Eduardo Santos
 # @Date:   2023-04-11 16:20:38
 # @Last Modified by:   Eduardo Santos
-# @Last Modified time: 2023-05-28 01:14:53
+# @Last Modified time: 2023-05-29 22:24:20
 
 from django.http import HttpRequest
 from django.shortcuts import render, redirect
@@ -94,11 +94,11 @@ def teams(request):
             championships = standings_queries.team_total_championships(team[0])
             teams_history[team[0]] = sorted(teams_queries.get_team_drivers(team[0]), key=lambda x: x[0], reverse=True)
             if championships:
-                final_teams.append((team[0], team[1], championships[2]))
+                final_teams.append((team[0], team[1], team[2], championships[2]))
             else:
-                final_teams.append((team[0], team[1], '0'))
+                final_teams.append((team[0], team[1], team[2], '0'))
         
-        sorted_list = sorted(final_teams, key=lambda x: x[2], reverse=True)
+        sorted_list = sorted(final_teams, key=lambda x: x[3], reverse=True)
 
         data = {'data': sorted_list, 'teams_history': teams_history}
         #print(data)
