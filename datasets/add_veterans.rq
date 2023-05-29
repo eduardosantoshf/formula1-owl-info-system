@@ -1,0 +1,25 @@
+PREFIX driver: <http://f1/driver/pred/>
+PREFIX contract: <http://f1/contract/pred/>
+PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> 
+PREFIX f1: <http://f1/>
+
+PREFIX veteran: <http://f1/veteran/>
+
+INSERT {
+    GRAPH veteran:graph_temp { ?driver driver:years ?count }
+}
+WHERE {
+    SELECT ?driver (COUNT(?contract) as ?count)
+    WHERE {
+        ?driver driver:signed_for ?contract .
+    }
+    GROUP BY ?driver
+    HAVING (?count > 3)
+};
+
+INSERT { ?driver driver:years ?count }
+WHERE {
+    GRAPH veteran:graph_temp { ?driver driver:years ?count }.
+};
+
+DROP GRAPH veteran:graph_temp;
