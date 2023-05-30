@@ -68,6 +68,16 @@ f1:Champion a owl:Class ;
         ])
     ] .
 
+f1:Best_teams a owl:Class ;
+    rdfs:label "Best teams" ;
+    rdfs:subClassOf [ a owl:Restriction ;
+    owl:intersectionOf (f1:Team
+            [ a owl:Restriction ;
+            owl:minCardinality "1"^^<http://www.w3.org/2001/XMLSchema#int>;
+            owl:onProperty team_pred:team_champs ;
+        ])
+    ] .
+
 
 f1:Nationality rdf:type rdfs:Class ;
     rdfs:label "Nationality" .
@@ -245,6 +255,11 @@ team_pred:signed rdf:type rdf:Property ;
 team_pred:finished_in rdf:type rdf:Property ;
     rdfs:domain f1:Team;
     rdfs:range f1:Team_final_standing .
+
+team_pred:team_champs rdf:type rdf:Property ;
+    rdfs:domain f1:Best_teams;
+    rdfs:range rdf:Literal ;
+    rdfs:comment "Number of championships" .
 
 
 ###################### Team Final Standings #####################

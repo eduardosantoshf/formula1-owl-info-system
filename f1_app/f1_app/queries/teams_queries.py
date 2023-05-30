@@ -31,7 +31,8 @@ teams = {
     "Red Bull": "Red_Bull_Racing",
     "McLaren": "McLaren",
     "Haas F1 Team": "Haas_F1_Team",
-    "Alpine F1 Team": "Alpine_F1_Team"
+    "Alpine F1 Team": "Alpine_F1_Team",
+    "Mercedes": None
 }
 
 
