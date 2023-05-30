@@ -56,6 +56,7 @@ drivers_data = {
   "Pietro Fittipaldi": "Pietro_Fittipaldi",
   "Nyck de Vries": "Nyck_de_Vries",
   "Jack Aitken": "Jack_Aitken",
+  "Lewis Hamilton": "Lewis_Hamilton"
 }
 
 """ Get pilot's biography

@@ -68,6 +68,12 @@ f1:Champion a owl:Class ;
         ])
     ] .
 
+
+f1:Nationality rdf:type rdfs:Class ;
+    rdfs:label "Nationality" .
+
+
+
 ########################## Sub Classes ##########################
 
 f1:Driver_standing rdf:type rdfs:Class ;
@@ -82,6 +88,13 @@ f1:Team_final_standing rdf:type rdfs:Class ;
     rdfs:label "Team Final Standings" ;
     rdfs:subClassOf f1:Standing .
 
+
+########################## Nationality ##########################
+
+driver_pred:nationality rdf:type rdf:Property ;
+    rdfs:domain f1:Nationality;
+    rdfs:range rdf:Literal ;
+    rdfs:comment "Driver's nationality" .
 
 ############################ Drivers ############################
 
@@ -113,7 +126,7 @@ driver_pred:forename rdf:type rdf:Property ;
 
 driver_pred:nationality rdf:type rdf:Property ;
     rdfs:domain f1:Driver ;
-    rdfs:range rdfs:Literal ;
+    rdfs:range f1:Nationality ;
     rdfs:comment "References the nationality of the driver" .
 
 #### isto aqui acho que conseguimos usar owl
@@ -191,12 +204,9 @@ race_pred:round rdf:type rdf:Property ;
     rdfs:domain f1:Race ;
     rdfs:range rdfs:Literal .
 
-## owl
 race_pred:has rdf:type rdf:Property ;
     rdfs:domain f1:Race;
     rdfs:range f1:Driver_standing .
-
-
 
 
 ############################ Contract ###########################

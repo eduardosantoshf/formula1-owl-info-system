@@ -25,25 +25,22 @@ accessor = GraphDBApi(client)
 def experience_drivers():
     query = """
     PREFIX driver: <http://f1/driver/pred/>
-    PREFIX contract: <http://f1/contract/pred/> 
+    PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
+    PREFIX f1: <http://f1/>
 
-    SELECT (COUNT(DISTINCT ?year) AS ?years) ?code ?forename ?surname ?nationality WHERE
+    SELECT ?d ?code ?forename ?surname ?nationality ?years WHERE
     {
-        ?driver_id driver:code ?code.
-        ?driver_id driver:forename ?forename.
-        ?driver_id driver:surname ?surname.
-        ?driver_id driver:nationality ?nationality.
+        ?d rdf:type f1:Veteran .
 
-        ?driver_id driver:signed_for ?contract.
-        ?contract contract:year ?year.
+        ?d driver:code ?code.
+        ?d driver:forename ?forename.
+        ?d driver:surname ?surname.
+        ?d driver:nationality ?nationality.
+        ?d driver:years ?years.
 
     }
-    GROUP BY ?code ?forename ?surname ?nationality
-    HAVING (?years >= 4)
-    ORDER BY DESC(?years)
     
     """
-
 
 
     payload_query = {"query": query}
