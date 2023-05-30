@@ -1,3 +1,9 @@
+<!-- 
+  @Author: Eduardo Santos
+  @Date:   2023-04-11 14:02:17
+  @Last Modified by:   Eduardo Santos
+  @Last Modified time: 2023-05-29 22:27:42
+-->
 {%  extends "base.html" %}
 
 {% block content %}
@@ -21,7 +27,7 @@
                     <li class="list-group-item">Nationality: {{ i.1 }}</li>
                 </ul>
                 <ul class="list-group list-group-flush">
-                    <li class="list-group-item">Championships won: {{ i.2 }}</li>
+                    <li class="list-group-item">Championships won: {{ i.3 }}</li>
                 </ul>
                 <div class="modal" id="{{i.0|cut:' '}}" tabindex="-1" role="dialog">
                     <div class="modal-dialog" role="document">
@@ -48,7 +54,27 @@
                         </div>
                     </div>
                 </div>
+                <div class="modal" id="{{i.1|cut:' '}}" tabindex="-1" role="dialog">
+                    <div class="modal-dialog" role="document">
+                        <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 class="modal-title">Team's Info</h5>
+                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                            </button>
+                        </div>
+                        <div class="modal-body">
+                            <div style="text-align: center; margin-bottom: 1.5rem;">{{ i.0 }}</div>
+                            {{ i.2 }}
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                        </div>
+                        </div>
+                    </div>
+                </div>
                 <div class="card-body text-center">
+                    <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#{{i.1}}">More info</button>
                     <button type="button" class="btn btn-dark" data-toggle="modal" data-target="#{{i.0|cut:' '}}">Drivers History</button>
                 </div>
             </div>

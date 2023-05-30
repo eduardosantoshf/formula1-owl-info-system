@@ -1,3 +1,9 @@
+<!-- 
+  @Author: Eduardo Santos
+  @Date:   2023-04-07 16:11:44
+  @Last Modified by:   Eduardo Santos
+  @Last Modified time: 2023-05-29 22:37:42
+-->
 {%  extends "base.html" %}
 
 {% block content %}
@@ -52,7 +58,7 @@
                     <li class="list-group-item">Round: {{ i.3 }}</li>
                 </ul>
                 <div class="card-body text-center">
-                    <button href="{% url 'race' season=i.4 race_name=i.1 %}" data-popup-url="{% url 'race' season=i.4 race_name=i.1 %}" type="button" class="open-modal btn btn-dark">Modal for results</button>
+                    <button href="{% url 'race' season=i.4 race_name=i.1 %}" data-popup-url="{% url 'race' season=i.4 race_name=i.1 %}" type="button" class="open-modal btn btn-dark">Results</button>
                 </div>
             </div>
             {% endfor %}
