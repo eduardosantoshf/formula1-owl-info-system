@@ -2,7 +2,7 @@
 # @Author: Eduardo Santos
 # @Date:   2023-04-11 16:20:38
 # @Last Modified by:   Eduardo Santos
-# @Last Modified time: 2023-05-29 22:24:20
+# @Last Modified time: 2023-05-30 02:23:10
 
 from django.http import HttpRequest
 from django.shortcuts import render, redirect
@@ -153,7 +153,7 @@ def races(request, season):
         races = races_queries.races_by_season(season)
         new_races = []
         for race in races:
-            new_races.append((race[0], race[1], cities[race[1]], race[3], season))
+            new_races.append((race[0], race[1], cities[race[1]], race[3], season, race[4], race[5], race[6]))
 
         #print(new_races)
         if len(new_races):
