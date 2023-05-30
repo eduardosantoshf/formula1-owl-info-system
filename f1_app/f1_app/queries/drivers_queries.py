@@ -2,7 +2,7 @@
 # @Author: Eduardo Santos
 # @Date:   2023-04-11 14:02:17
 # @Last Modified by:   Eduardo Santos
-# @Last Modified time: 2023-05-28 01:11:57
+# @Last Modified time: 2023-05-30 02:25:00
 import json
 from s4api.graphdb_api import GraphDBApi
 from s4api.swagger import ApiClient
@@ -56,6 +56,7 @@ drivers_data = {
   "Pietro Fittipaldi": "Pietro_Fittipaldi",
   "Nyck de Vries": "Nyck_de_Vries",
   "Jack Aitken": "Jack_Aitken",
+  "Lewis Hamilton": "Lewis_Hamilton"
 }
 
 """ Get pilot's biography
