@@ -1,7 +1,13 @@
+# -*- coding: utf-8 -*-
+# @Author: Eduardo Santos
+# @Date:   2023-04-07 16:11:44
+# @Last Modified by:   Eduardo Santos
+# @Last Modified time: 2023-05-30 23:29:51
 import json
 from s4api.graphdb_api import GraphDBApi
 from s4api.swagger import ApiClient
 from difflib import SequenceMatcher
+from SPARQLWrapper import SPARQLWrapper2
 import re
 
 endpoint = "http://localhost:7200"
@@ -9,6 +15,53 @@ repo = "db"
 
 client = ApiClient(endpoint=endpoint)
 accessor = GraphDBApi(client)
+
+sparql = SPARQLWrapper2("https://dbpedia.org/sparql")
+
+
+def get_race_info(race, season):
+    query = """
+    PREFIX db: <http://dbpedia.org/resource/>
+        PREFIX dbo: <http://dbpedia.org/ontology/>
+
+        SELECT ?abstract, ?distance, ?distanceLaps
+        WHERE {
+        db:SEASON_RACE dbo:abstract ?abstract .
+        db:SEASON_RACE dbo:distance ?distance .
+        db:SEASON_RACE dbo:distanceLaps ?distanceLaps .
+        FILTER (LANG(?abstract) = 'en')
+        }
+        LIMIT 1
+    """
+    race = race.replace(" ", "_")
+    query = query.replace("SEASON_RACE", f"{season}_{race}")
+    
+    sparql.setQuery(query)
+    results = sparql.query()
+
+    data = results.bindings
+
+    if data:
+        if data[0]["abstract"] != []:
+            abstract = str(data[0]["abstract"])[15:-2]
+        else:
+            abstract = "Unknown"
+            
+        if data[0]["distance"] != []:
+            distance = str(data[0]["distance"])[21:-2]
+        else:
+            distance = "Unknown"
+
+        if data[0]["distanceLaps"] != []:
+            distanceLaps = str(data[0]["distanceLaps"])[21:-2]
+        else:
+            distanceLaps = "Unknown"
+    else:
+            abstract = "Unknown"
+            distance = "Unknown"
+            distanceLaps = "Unknown"
+
+    return abstract, distance, distanceLaps
 
 
 """ Get races for a specific season
@@ -45,15 +98,24 @@ def races_by_season(season):
 
     payload_query = {"query": query}
     response = accessor.sparql_select(body=payload_query, repo_name=repo)
-    #print(response)
+
     response = json.loads(response)
 
     if response['results']['bindings']:
         data = response['results']['bindings']
-        return [(race['race_id']['value'].split("/")[-1], 
+        races = []
+
+        for race in data:
+
+            abstract, race_distance, race_laps = get_race_info(race['race_name']['value'], season)
+
+            races += [(race['race_id']['value'].split("/")[-1], 
                  race['race_name']['value'], 
                  race['season']['value'],
-                 race['round']['value']) for race in data]
+                 race['round']['value'],
+                 abstract, race_distance, race_laps)]
+            
+        return races
     else:
         return []
 
@@ -213,6 +275,7 @@ def all_pilots_standings_by_race_by_season(race_name, season):
 
 
 
-#print(races_by_season(2022))
+#print(races_by_season(2021))
 #print(pilot_standings_races_by_season("HAM", 2019))
 #print(all_pilots_standings_by_race_by_season("Australian Grand Prix", 2019))
+#get_race_info("Australian Grand Prix", 2019)

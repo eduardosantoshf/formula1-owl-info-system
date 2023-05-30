@@ -2,7 +2,7 @@
 # @Author: Eduardo Santos
 # @Date:   2023-04-11 14:02:17
 # @Last Modified by:   Eduardo Santos
-# @Last Modified time: 2023-05-30 02:25:00
+# @Last Modified time: 2023-05-30 23:16:05
 import json
 from s4api.graphdb_api import GraphDBApi
 from s4api.swagger import ApiClient
@@ -400,7 +400,7 @@ def get_pilot_teams(code):
     
 
 #print(get_pilot_info("Hamilton"))
-list_all_pilots()
+#list_all_pilots()
 #print(get_pilots_by_season(2022))
 #print(get_team_pilots_by_season(2022, "Mercedes"))
 #print(get_pilot_teams("GAS"))

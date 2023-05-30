@@ -2,7 +2,7 @@
 # @Author: Eduardo Santos
 # @Date:   2023-03-26 22:49:05
 # @Last Modified by:   Eduardo Santos
-# @Last Modified time: 2023-05-29 22:23:39
+# @Last Modified time: 2023-05-29 22:42:53
 
 import json
 from s4api.graphdb_api import GraphDBApi
@@ -118,8 +118,6 @@ def get_team_abstract(team):
     
     else:
         abstract = ""
-
-    print(abstract)
 
     return abstract
 

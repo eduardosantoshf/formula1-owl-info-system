@@ -1,3 +1,8 @@
+# -*- coding: utf-8 -*-
+# @Author: Eduardo Santos
+# @Date:   2023-03-29 23:34:37
+# @Last Modified by:   Eduardo Santos
+# @Last Modified time: 2023-05-30 23:17:38
 import json
 from s4api.graphdb_api import GraphDBApi
 from s4api.swagger import ApiClient
@@ -355,5 +360,5 @@ def teams_season_final_standings(season):
 #print(pilot_total_championships("HAM"))
 #print(team_total_championships("Mercedes"))
 
-print(pilots_season_final_standings(2022))
+#print(pilots_season_final_standings(2022))
 #print(teams_season_final_standings(2021))
