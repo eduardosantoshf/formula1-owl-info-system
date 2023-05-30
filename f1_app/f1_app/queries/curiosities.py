@@ -25,25 +25,22 @@ accessor = GraphDBApi(client)
 def experience_drivers():
     query = """
     PREFIX driver: <http://f1/driver/pred/>
-    PREFIX contract: <http://f1/contract/pred/> 
+    PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
+    PREFIX f1: <http://f1/>
 
-    SELECT (COUNT(DISTINCT ?year) AS ?years) ?code ?forename ?surname ?nationality WHERE
+    SELECT ?d ?code ?forename ?surname ?nationality ?years WHERE
     {
-        ?driver_id driver:code ?code.
-        ?driver_id driver:forename ?forename.
-        ?driver_id driver:surname ?surname.
-        ?driver_id driver:nationality ?nationality.
+        ?d rdf:type f1:Veteran .
 
-        ?driver_id driver:signed_for ?contract.
-        ?contract contract:year ?year.
+        ?d driver:code ?code.
+        ?d driver:forename ?forename.
+        ?d driver:surname ?surname.
+        ?d driver:nationality ?nationality.
+        ?d driver:years ?years.
 
     }
-    GROUP BY ?code ?forename ?surname ?nationality
-    HAVING (?years >= 4)
-    ORDER BY DESC(?years)
     
     """
-
 
 
     payload_query = {"query": query}
@@ -77,23 +74,18 @@ def experience_drivers():
 def best_pilots():
     query = """
     PREFIX driver: <http://f1/driver/pred/> 
-    PREFIX driver_final_standings: <http://f1/driver_final_standing/pred/>
+    PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
+    PREFIX f1: <http://f1/>
 
-    SELECT ?driver_code ?forename ?surname ?nationality (COUNT(DISTINCT ?season) as ?count) WHERE
+    SELECT ?d ?code ?forename ?surname ?nationality ?count WHERE
     {   
-        ?driver_id driver:code ?driver_code.
-        ?driver_id driver:nationality ?nationality.
-        ?driver_id driver:forename ?forename.
-        ?driver_id driver:surname ?surname.
-
-        ?driver_id driver:finished_in ?dfs.
-        ?dfs driver_final_standings:season ?season.
-        ?dfs driver_final_standings:position ?position.
-
-        FILTER (?position = '1')
+    	?d rdf:type f1:Champion .
+        ?d driver:code ?code.
+        ?d driver:nationality ?nationality.
+        ?d driver:forename ?forename.
+        ?d driver:surname ?surname.
+    	?d driver:champs ?count.
     }
-    GROUP BY ?driver_code ?forename ?surname ?nationality
-    ORDER BY DESC(?count)
     """
 
 
@@ -104,7 +96,7 @@ def best_pilots():
 
     if response['results']['bindings']:
         data = response['results']['bindings']
-        return [(pilot['driver_code']['value'], 
+        return [(pilot['code']['value'], 
                  pilot['forename']['value'], 
                  pilot['surname']['value'], 
                  pilot['nationality']['value'],
@@ -127,21 +119,16 @@ def best_pilots():
 def best_teams():
     query = """
     PREFIX team: <http://f1/team/pred/> 
-    PREFIX team_final_standings: <http://f1/team_final_standing/pred/>
+    PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
+    PREFIX f1: <http://f1/>
 
-    SELECT ?team_name ?team_nationality (COUNT(DISTINCT ?season) as ?count) WHERE
+    SELECT ?team_name ?team_nationality ?count WHERE
     {   
-        ?team_id team:name ?team_name.
-        ?team_id team:nationality ?team_nationality.
-
-        ?team_id team:finished_in ?tfs.
-        ?tfs team_final_standings:season ?season.
-        ?tfs team_final_standings:position ?position.
-
-        FILTER (?position = '1')
+    	?t rdf:type f1:Best_teams .
+        ?t team:name ?team_name.
+        ?t team:nationality ?team_nationality.
+    	?t team:team_champs ?count.
     }
-    GROUP BY ?team_name ?team_nationality
-    ORDER BY DESC (?count)
 
     """
 

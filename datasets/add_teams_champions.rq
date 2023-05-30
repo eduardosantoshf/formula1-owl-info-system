@@ -1,0 +1,30 @@
+PREFIX team: <http://f1/team/pred/>
+PREFIX team_final_standings: <http://f1/team_final_standing/pred/>
+PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> 
+PREFIX f1: <http://f1/>
+
+
+
+PREFIX team_champion: <http://f1/team_champion/pred/>
+
+INSERT {
+    GRAPH team_champion:graph_temp { ?team team:team_champs ?count }
+}
+WHERE {
+    SELECT ?team (COUNT(DISTINCT ?season) as ?count) WHERE
+    {   
+        ?team team:finished_in ?tfs.
+        ?tfs team_final_standings:season ?season.
+        ?tfs team_final_standings:position ?position.
+
+        FILTER (?position = '1')
+    }
+    GROUP BY ?team
+};
+
+INSERT { ?team team:team_champs ?count }
+WHERE {
+    GRAPH team_champion:graph_temp { ?team team:team_champs ?count }.
+};
+
+DROP GRAPH team_champion:graph_temp;
