@@ -144,7 +144,7 @@ def drivers(request):
                     final_drivers.append((driver[0], driver[1],  driver[2],  driver[3], driver[4], '0', driver[5]))
             
             sorted_list = sorted(final_drivers, key=lambda x: x[5], reverse=True)
-            print(drivers_teammates)
+
             data = {'data': sorted_list, 'drivers_history': drivers_history, 'drivers_teammates': drivers_teammates}
 
             return render(request, "drivers.html", data)

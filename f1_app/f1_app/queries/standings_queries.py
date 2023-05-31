@@ -139,24 +139,20 @@ def team_final_standings_by_season(name):
 def pilot_total_championships(code):
     query = """
     PREFIX driver: <http://f1/driver/pred/> 
-    PREFIX driver_final_standings: <http://f1/driver_final_standing/pred/>
+    PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
+    PREFIX f1: <http://f1/>
 
-    SELECT ?driver_code ?forename ?surname ?nationality (count(distinct ?season) as ?count) WHERE
-    {   
-        ?driver_id driver:code ?driver_code.
-        ?driver_id driver:nationality ?nationality.
-        ?driver_id driver:forename ?forename.
-        ?driver_id driver:surname ?surname.
+        SELECT ?driver_code ?forename ?surname ?nationality ?count WHERE
+        {   
+            ?driver_id rdf:type f1:Champion .
+            ?driver_id driver:code ?driver_code.
+            ?driver_id driver:nationality ?nationality.
+            ?driver_id driver:forename ?forename.
+            ?driver_id driver:surname ?surname.
+            ?driver_id driver:champs ?count .
 
-        FILTER regex(?driver_code, "DRIVER_CODE" , "i")
-
-        ?driver_id driver:finished_in ?dfs.
-        ?dfs driver_final_standings:season ?season.
-        ?dfs driver_final_standings:position ?position.
-
-        FILTER (?position = '1')
-    }
-    GROUP BY ?driver_code ?forename ?surname ?nationality
+            FILTER regex(?driver_code, "DRIVER_CODE" , "i")
+        }
     """
 
     query = query.replace("DRIVER_CODE", code)
@@ -193,22 +189,18 @@ def pilot_total_championships(code):
 def team_total_championships(name):
     query = """
     PREFIX team: <http://f1/team/pred/> 
-    PREFIX team_final_standings: <http://f1/team_final_standing/pred/>
+    PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
+    PREFIX f1: <http://f1/>
 
-    SELECT ?team_name ?team_nationality (count(distinct ?season) as ?count) WHERE
+    SELECT ?team_name ?team_nationality ?count WHERE
     {   
+        ?team_id rdf:type f1:Best_teams .
         ?team_id team:name ?team_name.
         ?team_id team:nationality ?team_nationality.
+        ?team_id team:team_champs ?count .
 
         FILTER regex(?team_name, "TEAM_NAME" , "i")
-
-        ?team_id team:finished_in ?tfs.
-        ?tfs team_final_standings:season ?season.
-        ?tfs team_final_standings:position ?position.
-
-        FILTER (?position = '1')
     }
-    GROUP BY ?team_name ?team_nationality
     """
 
     query = query.replace("TEAM_NAME", name)

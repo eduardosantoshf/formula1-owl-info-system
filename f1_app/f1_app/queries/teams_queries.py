@@ -144,20 +144,21 @@ def get_team_drivers(name):
     PREFIX driver: <http://f1/driver/pred/> 
     PREFIX contract: <http://f1/contract/pred/>
     PREFIX team: <http://f1/team/pred/>
+    PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
+    PREFIX f1: <http://f1/>
 
     SELECT  ?year ?team_name ?forename ?surname WHERE
-    {
-        ?driver_id driver:code ?code.
+    {   
+        
+        ?driver_id rdf:type f1:Driver .
         ?driver_id driver:signed_for ?contract.
         ?driver_id driver:forename ?forename.
         ?driver_id driver:surname ?surname.
 
         ?contract contract:year ?year.
-        ?contract contract:team ?team.
 
         ?team_id team:signed ?contract.
         ?team_id team:name ?team_name.
-
 
         FILTER (regex(?team_name, "TEAM_NAME", "i"))
     }
@@ -182,6 +183,6 @@ def get_team_drivers(name):
     else:
         return []
 
-get_all_teams()
+#get_all_teams()
 #print(get_team_drivers("Mercedes"))
 #get_team_abstract("Alfa Romeo")
