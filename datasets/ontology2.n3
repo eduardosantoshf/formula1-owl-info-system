@@ -44,7 +44,7 @@ f1:Contract rdf:type rdfs:Class ;
 f1:Team rdf:type rdfs:Class ;
     rdfs:label "Team" .
 
-f1:Driver rdf:type rdfs:Class ;
+f1:Standing rdf:type rdfs:Class ;
     rdfs:label "Standing" .
 
 f1:Team_Drivers_History rdf:type rdfs:Class ;
@@ -149,7 +149,6 @@ driver_pred:nationality rdf:type rdf:Property ;
     rdfs:range f1:Nationality ;
     rdfs:comment "References the nationality of the driver" .
 
-#### isto aqui acho que conseguimos usar owl
 driver_pred:has rdf:type rdf:Property ;
     rdfs:domain f1:Driver ;
     rdfs:range f1:Driver_standing ;
@@ -257,6 +256,11 @@ contract_pred:year rdf:type rdf:Property ;
 contract_pred:team rdf:type rdf:Property ;
     rdfs:domain f1:Contract;
     rdfs:range rdfs:Literal .
+
+contract_pred:is_signed_by rdf:type owl:ObjectProperty ;
+    owl:inverseOf driver_pred:signed_for ;
+    rdfs:range f1:Driver ;
+    rdf:comment "Inverse of Driver's signed_for" .
 
 
 ############################# Team ##############################
