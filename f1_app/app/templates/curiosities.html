@@ -163,7 +163,7 @@
                 </div>
             </div>
         </div>
-        <div class="d-flex justify-content-center">
+        <div class="d-flex justify-content-center" typeof="f1:Champion">
             <table class="table table-bordered col-lg-8" style="margin-top: 2rem; table-layout: fixed;">
                 <thead class="thead-dark">
                   <tr>
@@ -176,10 +176,10 @@
                 <tbody>
                     {% for pilot in experienced_pilots %}
                   <tr>
-                    <th scope="row">{{ pilot.0 }}</th>
-                    <th>{{ pilot.2 }} {{ pilot.1 }}</th>
-                    <td>{{ pilot.3 }}</td>
-                    <td>{{ pilot.4 }}</td>
+                    <th scope="row" property="f1:code">{{ pilot.0 }}</th>
+                    <th property="f1:surname" property="f1:forename">{{ pilot.2 }} {{ pilot.1 }}</th>
+                    <td property="f1:nationality">{{ pilot.3 }}</td>
+                    <td property="f1:years">{{ pilot.4 }}</td>
                   </tr>
                   {% endfor %}
                 </tbody>
@@ -223,7 +223,7 @@
                 </div>
             </div>
         </div>
-        <div class="d-flex justify-content-between" style="margin-bottom: 10rem;">
+        <div class="d-flex justify-content-between" style="margin-bottom: 10rem;" typeof="f1:Champion">
             <div class="col-lg-5">
                 <div class="d-flex justify-content-center">
                     <h5>Best Pilots </h5>
@@ -240,20 +240,20 @@
                     <tbody>
                         {% for pilot in best_pilots %}
                         <tr>
-                            <th scope="row">{{ pilot.0 }}</th>
-                            <th>{{ pilot.2 }} {{ pilot.1 }}</th>
-                            <td>{{ pilot.3 }}</td>
-                            <td>{{ pilot.4 }}</td>
+                            <th scope="row" property="f1:code">{{ pilot.0 }}</th>
+                            <th property="f1:surname" property="f1:forename">{{ pilot.2 }} {{ pilot.1 }}</th>
+                            <td property="f1:nationality">{{ pilot.3 }}</td>
+                            <td property="f1:champs">{{ pilot.4 }}</td>
                         </tr>
                         {% endfor %}
                     </tbody>
                 </table>
             </div> 
-            <div class="col-lg-5">
+            <div class="col-lg-5" typeof="f1:Best_teams">
                 <div class="d-flex justify-content-center">
                     <h5>Best Teams </h5>
                 </div>
-                <table class="table table-bordered" style="margin-top: 2rem; table-layout: fixed;">
+                <table class="table table-bordered" style="margin-top: 2rem; table-layout: fixed;" typeof="">
                     <thead class="thead-dark">
                       <tr>
                         <th scope="col">Name                    </th>
@@ -264,9 +264,9 @@
                     <tbody>
                         {% for team in best_teams %}
                         <tr>
-                            <th scope="row">{{ team.0 }}</th>
-                            <th>{{ team.1 }}</th>
-                            <td>{{ team.2 }}</td>
+                            <th scope="row" property="f1:name">{{ team.0 }}</th>
+                            <th property="f1:nationality">{{ team.1 }}</th>
+                            <td property="f1:team_champs">{{ team.2 }}</td>
                         </tr>
                         {% endfor %}
                     </tbody>
