@@ -45,7 +45,7 @@
                 </li>
             </ul>
         </div>
-        <div class="row col-lg-12">
+        <div class="row col-lg-12"  xmlns:f1="http://f1/results/" typeof="f1:Driver_final_standing">
             <div class="table-responsive">
                 <table class="table table-striped">
                     <thead class="thead-dark">
@@ -57,14 +57,14 @@
                             <th scope="col">Position</th>
                         </tr>
                     </thead>
-                    <tbody>
+                    <tbody property="f1:finished_in">
                         {% for i in data %}
                         <tr>
-                        <th scope="row">{{i.0}}</th>                      
-                        <th >{{i.2}}  {{i.1}}</th>
-                        <th >{{i.4}}</th>
-                        <th >{{i.6}}</th>
-                        <th >{{i.5}}</th>
+                        <th scope="row" property="f1:code">{{i.0}}</th>
+                        <th property="f1:surname" property="f1:forename">{{i.2}}  {{i.1}}</th>
+                        <th property="f1:signed_for">{{i.4}}</th>
+                        <th property="f1:points">{{i.6}}</th>
+                        <th property="f1:position">{{i.5}}</th>
                         </tr>
                     {% endfor %}
                     </tbody>

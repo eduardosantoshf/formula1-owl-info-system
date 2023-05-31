@@ -22,21 +22,21 @@
         </form>
         <div class="row">
             {% for i in data %}
-            <div class="card" style="width: 23rem; margin: 2rem;">
-                <img class="card-img-top" src="../static/img/drivers/{{i.1}}.jpg" alt="Card image cap" style="width: 100%; height: 100%; object-fit: cover;">
+            <div class="card" style="width: 23rem; margin: 2rem;" xmlns:f1="http://f1/driver/" typeof="f1:Driver">
+                <img class="card-img-top" src="../static/img/drivers/{{i.1}}.jpg" alt="Card image cap" style="width: 100%; height: 100%; object-fit: cover;" property="f1:image">
                 <div class="card-body" style="margin: 0.5rem;">
-                    <h5 class="card-title">{{ i.2 }} {{ i.1 }}</h5>
+                    <h5 class="card-title" property="f1:surname" property="f1:forename">{{ i.2 }} {{ i.1 }}</h5>
                 </div>
                 <ul class="list-group list-group-flush">
-                    <li class="list-group-item">Age: {{ i.4 }}</li>
+                    <li class="list-group-item" property="f1:age">Age: {{ i.4 }}</li>
                 </ul>
                 <ul class="list-group list-group-flush">
-                    <li class="list-group-item">Nationality: {{ i.3 }}</li>
+                    <li class="list-group-item" property="nationality">Nationality: {{ i.3 }}</li>
                 </ul>
                 <ul class="list-group list-group-flush">
-                    <li class="list-group-item">Championships won: {{ i.5 }}</li>
+                    <li class="list-group-item" property="champs">Championships won: {{ i.5 }}</li>
                 </ul>
-                <div class="modal" id="{{i.0}}" tabindex="-1" role="dialog">
+                <div class="modal" id="{{i.0}}" tabindex="-1" role="dialog" typeof="f1:Driver_Teams_History">
                     <div class="modal-dialog" role="document">
                         <div class="modal-content">
                         <div class="modal-header">
@@ -50,7 +50,7 @@
                             {% for key, value in drivers_history.items %}
                                 {% if key == i.0 %}
                                     {% for x in value %}
-                                        <li class="list-group-item">{{ x.1 }} - {{ x.2 }}</li>
+                                        <li class="list-group-item" property="f1:signed_for">{{ x.1 }} - {{ x.2 }}</li>
                                     {% endfor %}
                                 {% endif %}
                             {% endfor %}
@@ -71,7 +71,7 @@
                             </button>
                         </div>
                         <div class="modal-body">
-                            <div style="text-align: center; margin-bottom: 1.5rem;">{{ i.2 }} {{ i.1 }}</div>
+                            <div style="text-align: center; margin-bottom: 1.5rem;" property="f1:biography">{{ i.2 }} {{ i.1 }}</div>
                             {{ i.6 }}
                         </div>
                         <div class="modal-footer">

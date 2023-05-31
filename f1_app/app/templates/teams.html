@@ -18,18 +18,19 @@
     <div class="container col-md-10">
         <div class="row">
             {% for i in data %}
-            <div class="card" style="width: 23rem; margin: 2rem; border: solid 0.3rem cadetblue;">
-                <img class="card-img-top" src="../static/img/teams/{{i.0}}.png" alt="Card image cap" style="width: 100%; height: 10rem; object-fit: scale-down; padding: 10px; border-bottom: solid 0.3rem cadetblue;">
+            <div class="card" style="width: 23rem; margin: 2rem; border: solid 0.3rem cadetblue;"
+                 xmlns:f1="http://f1/team/" typeof="f1:Team">
+                <img class="card-img-top" src="../static/img/teams/{{i.0}}.png" alt="Card image cap" style="width: 100%; height: 10rem; object-fit: scale-down; padding: 10px; border-bottom: solid 0.3rem cadetblue;" property="f1:logo">
                 <div class="card-body" style="margin: 0.5rem;">
-                    <h5 class="card-title">{{ i.0 }}</h5>
+                    <h5 class="card-title" property="f1:name">{{ i.0 }}</h5>
                 </div>
                 <ul class="list-group list-group-flush">
-                    <li class="list-group-item">Nationality: {{ i.1 }}</li>
+                    <li class="list-group-item" property="f1:nationality">Nationality: {{ i.1 }}</li>
                 </ul>
                 <ul class="list-group list-group-flush">
-                    <li class="list-group-item">Championships won: {{ i.3 }}</li>
+                    <li class="list-group-item" property="f1:team_champs">Championships won: {{ i.3 }}</li>
                 </ul>
-                <div class="modal" id="{{i.0|cut:' '}}" tabindex="-1" role="dialog">
+                <div class="modal" id="{{i.0|cut:' '}}" tabindex="-1" role="dialog" typeof="f1:Team_Drivers_History">
                     <div class="modal-dialog" role="document">
                         <div class="modal-content">
                         <div class="modal-header">
@@ -42,8 +43,8 @@
                             <div style="text-align: center; margin-bottom: 1.5rem;">{{ i.0 }}</div>
                             {% for key, value in teams_history.items %}
                                 {% if key == i.0 %}
-                                    {% for x in value %}
-                                        <li class="list-group-item">{{ x.0 }} - {{ x.3 }} {{ x.2 }}</li>
+                                    {% for x in value %}852397
+                                        <li class="list-group-item" property="f1:signed">{{ x.0 }} - {{ x.3 }} {{ x.2 }}</li>
                                     {% endfor %}
                                 {% endif %}
                             {% endfor %}
@@ -64,7 +65,7 @@
                             </button>
                         </div>
                         <div class="modal-body">
-                            <div style="text-align: center; margin-bottom: 1.5rem;">{{ i.0 }}</div>
+                            <div style="text-align: center; margin-bottom: 1.5rem;" property="f1:info">{{ i.0 }}</div>
                             {{ i.2 }}
                         </div>
                         <div class="modal-footer">

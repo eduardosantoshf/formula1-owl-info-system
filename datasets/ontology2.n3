@@ -47,6 +47,12 @@ f1:Team rdf:type rdfs:Class ;
 f1:Driver rdf:type rdfs:Class ;
     rdfs:label "Standing" .
 
+f1:Team_Drivers_History rdf:type rdfs:Class ;
+    rdfs:label "Team Drivers History" .
+
+f1:Driver_Teams_History rdf:type rdfs:Class ;
+    rdfs:label "Driver Teams History" .
+
 f1:Veteran a owl:Class ;
     rdfs:label "Veteran" ;
     rdfs:subClassOf [ a owl:Restriction ;
@@ -77,7 +83,6 @@ f1:Best_teams a owl:Class ;
             owl:onProperty team_pred:team_champs ;
         ])
     ] .
-
 
 f1:Nationality rdf:type rdfs:Class ;
     rdfs:label "Nationality" .
@@ -160,6 +165,20 @@ driver_pred:signed_for rdf:type rdf:Property ;
     rdfs:range f1:Contract ;
     rdfs:label "Signed for" .
 
+driver_pred:image rdf:type rdf:Property ;
+    rdfs:domain f1:Driver ;
+    rdfs:range rdfs:Literal ;
+    rdfs:comment "Driver image" .
+
+driver_pred:age rdf:type rdf:Property ;
+    rdfs:domain f1:Driver ;
+    rdfs:range rdfs:Literal ;
+    rdfs:comment "Driver age" .
+
+driver_pred:biography rdf:type rdf:Property ;
+    rdfs:domain f1:Driver ;
+    rdfs:range rdfs:Literal ;
+    rdfs:comment "Driver biography" .
 
 #################### Drivers Final Standings ####################
 
@@ -246,6 +265,16 @@ team_pred:name rdf:type rdf:Property ;
     rdfs:domain f1:Team ;
     rdfs:range rdfs:Literal ;
     rdfs:comment "The team name" .
+
+team_pred:logo rdf:type rdf:Property ;
+    rdfs:domain f1:Team ;
+    rdfs:range rdfs:Literal ;
+    rdfs:comment "The team logo" .
+
+team_pred:info rdf:type rdf:Property ;
+    rdfs:domain f1:Team ;
+    rdfs:range rdfs:Literal ;
+    rdfs:comment "The team information" .
 
 team_pred:nationality rdf:type rdf:Property ;
     rdfs:domain f1:Team ;
