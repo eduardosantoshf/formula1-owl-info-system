@@ -247,4 +247,157 @@ def create_contract(driver, team, season):
     return {'status_code': response.status_code}
 
 
-#create_contract("1", "1111562", 2023)
+
+def do_inferences():
+    veterans_inference()
+    champions_inference()
+    team_champions_inference()
+    teammates_inference()
+
+
+def veterans_inference():
+    query = """
+    PREFIX driver: <http://f1/driver/pred/>
+    PREFIX contract: <http://f1/contract/pred/>
+    PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> 
+    PREFIX f1: <http://f1/>
+
+    PREFIX veteran: <http://f1/veteran/>
+
+    INSERT {
+        GRAPH veteran:graph_temp { ?driver driver:years ?count }
+    }
+    WHERE {
+        SELECT ?driver (COUNT(?contract) as ?count)
+        WHERE {
+            ?driver driver:signed_for ?contract .
+        }
+        GROUP BY ?driver
+        HAVING (?count > 3)
+    };
+
+    INSERT { ?driver driver:years ?count }
+    WHERE {
+        GRAPH veteran:graph_temp { ?driver driver:years ?count }.
+    };
+
+    DROP GRAPH veteran:graph_temp;
+    """
+
+    payload_query = {"update": query}
+    response = accessor.sparql_update(body=payload_query, repo_name=repo)
+
+
+def champions_inference():
+    query = """
+    PREFIX driver: <http://f1/driver/pred/>
+    PREFIX driver_final_standings: <http://f1/driver_final_standing/pred/>
+    PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> 
+    PREFIX f1: <http://f1/>
+
+
+
+    PREFIX champion: <http://f1/champion/>
+
+    INSERT {
+        GRAPH champion:graph_temp { ?driver driver:champs ?count }
+    }
+    WHERE {
+        SELECT ?driver (COUNT(DISTINCT ?season) as ?count) WHERE
+        {   
+            ?driver driver:finished_in ?dfs.
+            ?dfs driver_final_standings:season ?season.
+            ?dfs driver_final_standings:position ?position.
+
+            FILTER (?position = '1')
+        }
+        GROUP BY ?driver
+    };
+
+    INSERT { ?driver driver:champs ?count }
+    WHERE {
+        GRAPH champion:graph_temp { ?driver driver:champs ?count }.
+    };
+
+    DROP GRAPH champion:graph_temp;
+    """
+    
+    payload_query = {"update": query}
+    response = accessor.sparql_update(body=payload_query, repo_name=repo)
+
+
+def team_champions_inference():
+    query = """
+    PREFIX team: <http://f1/team/pred/>
+    PREFIX team_final_standings: <http://f1/team_final_standing/pred/>
+    PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> 
+    PREFIX f1: <http://f1/>
+
+
+
+    PREFIX team_champion: <http://f1/team_champion/pred/>
+
+    INSERT {
+        GRAPH team_champion:graph_temp { ?team team:team_champs ?count }
+    }
+    WHERE {
+        SELECT ?team (COUNT(DISTINCT ?season) as ?count) WHERE
+        {   
+            ?team team:finished_in ?tfs.
+            ?tfs team_final_standings:season ?season.
+            ?tfs team_final_standings:position ?position.
+
+            FILTER (?position = '1')
+        }
+        GROUP BY ?team
+    };
+
+    INSERT { ?team team:team_champs ?count }
+    WHERE {
+        GRAPH team_champion:graph_temp { ?team team:team_champs ?count }.
+    };
+
+    DROP GRAPH team_champion:graph_temp;
+    """
+    
+    payload_query = {"update": query}
+    response = accessor.sparql_update(body=payload_query, repo_name=repo)
+
+
+def teammates_inference():
+    query = """
+    PREFIX driver: <http://f1/driver/pred/> 
+    PREFIX contract: <http://f1/contract/pred/>
+    PREFIX team: <http://f1/team/pred/>
+    PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
+    PREFIX f1: <http://f1/>
+
+    INSERT {
+        ?d1 driver:teammate ?d2 .
+    }
+    WHERE {
+        ?d1 rdf:type f1:Driver .
+        ?d2 rdf:type f1:Driver .
+        
+        ?d1 driver:code ?d1_code .
+        ?d2 driver:code ?d2_code .
+        
+        ?d1 driver:signed_for ?contract1 .
+        ?contract1 rdf:type f1:Contract .
+        ?d2 driver:signed_for ?contract2 .
+        ?contract2 rdf:type f1:Contract .
+        
+        ?contract1 contract:year ?year .
+        ?contract2 contract:year ?year .
+        
+        ?team rdf:type f1:Team .
+        ?team team:signed ?contract1 .
+        ?team team:signed ?contract2 .
+        
+        FILTER(?d1_code != ?d2_code)
+        
+    }
+    """
+    
+    payload_query = {"update": query}
+    response = accessor.sparql_update(body=payload_query, repo_name=repo)

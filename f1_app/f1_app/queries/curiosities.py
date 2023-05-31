@@ -161,9 +161,12 @@ def pilots_finished_top3():
     query = """
     PREFIX driver: <http://f1/driver/pred/> 
     PREFIX driver_final_standings: <http://f1/driver_final_standing/pred/>
+    PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
+    PREFIX f1: <http://f1/>
 
     SELECT ?driver_code ?forename ?surname ?nationality (COUNT(DISTINCT ?season) as ?count) WHERE
     {   
+        ?driver_id rdf:type f1:Driver .
         ?driver_id driver:code ?driver_code.
         ?driver_id driver:nationality ?nationality.
         ?driver_id driver:forename ?forename.

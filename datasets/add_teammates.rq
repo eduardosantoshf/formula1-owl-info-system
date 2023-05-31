@@ -1,0 +1,31 @@
+PREFIX driver: <http://f1/driver/pred/> 
+PREFIX contract: <http://f1/contract/pred/>
+PREFIX team: <http://f1/team/pred/>
+PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
+PREFIX f1: <http://f1/>
+
+INSERT {
+    ?d1 driver:teammate ?d2 .
+}
+WHERE {
+    ?d1 rdf:type f1:Driver .
+    ?d2 rdf:type f1:Driver .
+    
+    ?d1 driver:code ?d1_code .
+	?d2 driver:code ?d2_code .
+    
+    ?d1 driver:signed_for ?contract1 .
+    ?contract1 rdf:type f1:Contract .
+    ?d2 driver:signed_for ?contract2 .
+    ?contract2 rdf:type f1:Contract .
+    
+    ?contract1 contract:year ?year .
+    ?contract2 contract:year ?year .
+    
+    ?team rdf:type f1:Team .
+    ?team team:signed ?contract1 .
+    ?team team:signed ?contract2 .
+    
+    FILTER(?d1_code != ?d2_code)
+    
+}

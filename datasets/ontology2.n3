@@ -114,6 +114,11 @@ driver_pred:years rdf:type rdf:Property ;
     rdfs:range rdf:Literal ;
     rdfs:comment "Years of experience" .
 
+driver_pred:teammate rdf:type owl:SymmetricProperty ;
+    rdfs:domain f1:Driver ;
+    rdfs:range f1:Driver ;
+    rdfs:comment "Symetric teammate property" .
+
 driver_pred:champs rdf:type rdf:Property ;
     rdfs:domain f1:Champion;
     rdfs:range rdf:Literal ;

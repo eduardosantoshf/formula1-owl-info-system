@@ -43,6 +43,7 @@ urlpatterns = [
     path('admin/addTeam', views.add_team, name="addTeam"),
     path('admin/deleteDriver', views.delete_driver, name="deleteDriver"),
     path('admin/deleteTeam', views.delete_team, name="deleteTeam"),
+    path('admin/inferences', views.inferences, name="inferences"),
 
 
     path('404', views.not_found, name="notfound")

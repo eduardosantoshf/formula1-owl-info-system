@@ -80,9 +80,36 @@
                         </div>
                     </div>
                 </div>
+                <div class="modal" id="{{i.2}}" tabindex="-1" role="dialog">
+                    <div class="modal-dialog" role="document">
+                        <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 class="modal-title">History of teammates</h5>
+                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                            </button>
+                        </div>
+                        <div class="modal-body">
+                            <ul class="list-group list-group-flush">
+                                {% for key, value in drivers_teammates.items %}
+                                    {% if key == i.0 %}
+                                        {% for x in value %}
+                                            <li class="list-group-item">{{ x.0 }} - {{ x.1 }} {{ x.2 }}</li>
+                                        {% endfor %}
+                                    {% endif %}    
+                                {% endfor %}
+                            </ul>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                        </div>
+                        </div>
+                    </div>
+                </div>
                 <div class="card-body text-center">
                     <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#{{i.1}}">Bio</button>
                     <button type="button" class="btn btn-dark" data-toggle="modal" data-target="#{{i.0}}">Teams History</button>
+                    <button type="button" class="btn btn-dark" data-toggle="modal" data-target="#{{i.2}}">Teammates</button>
                 </div>
             </div>
             {% endfor %}

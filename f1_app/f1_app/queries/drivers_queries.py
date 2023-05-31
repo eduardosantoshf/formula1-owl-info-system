@@ -190,9 +190,12 @@ def get_pilot_age(driver):
 def list_all_pilots():
     query = """
     PREFIX driver: <http://f1/driver/pred/> 
+    PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
+    PREFIX f1: <http://f1/>
 
     SELECT ?driver_code ?forename ?surname ?nationality WHERE
     {
+        ?driver_id rdf:type f1:Driver .
         ?driver_id driver:code ?driver_code.
         ?driver_id driver:nationality ?nationality.
         ?driver_id driver:forename ?forename.
@@ -238,18 +241,22 @@ def get_pilots_by_season(season):
     PREFIX driver: <http://f1/driver/pred/> 
     PREFIX contract: <http://f1/contract/pred/>
     PREFIX team: <http://f1/team/pred/>
+    PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
+    PREFIX f1: <http://f1/>
 
     SELECT ?code ?forename ?surname ?nationality ?year ?team_name WHERE
     {
+        ?driver_id rdf:type f1:Driver .
         ?driver_id driver:code ?code.
         ?driver_id driver:forename ?forename.
         ?driver_id driver:surname ?surname.
         ?driver_id driver:nationality ?nationality.
         ?driver_id driver:signed_for ?contract.
-
+    
+		?contract rdf:type f1:Contract .
         ?contract contract:year ?year.
-        ?contract contract:team ?team.
-
+		
+    	?team_id rdf:type f1:Team .
         ?team_id team:signed ?contract.
         ?team_id team:name ?team_name.
 
@@ -299,18 +306,22 @@ def get_team_pilots_by_season(season, team_name):
     PREFIX driver: <http://f1/driver/pred/> 
     PREFIX contract: <http://f1/contract/pred/>
     PREFIX team: <http://f1/team/pred/>
+    PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
+    PREFIX f1: <http://f1/>
 
     SELECT ?code ?forename ?surname ?nationality ?year ?team_name ?team_nationality WHERE
     {
+        ?driver_id rdf:type f1:Driver .
         ?driver_id driver:code ?code.
         ?driver_id driver:forename ?forename.
         ?driver_id driver:surname ?surname.
         ?driver_id driver:nationality ?nationality.
         ?driver_id driver:signed_for ?contract.
 
+        ?contract rdf:type f1:Contract .
         ?contract contract:year ?year.
-        ?contract contract:team ?team.
 
+        ?team_id rdf:type f1:Team .
         ?team_id team:signed ?contract.
         ?team_id team:name ?team_name.
         ?team_id team:nationality ?team_nationality.
@@ -360,15 +371,19 @@ def get_pilot_teams(code):
     PREFIX driver: <http://f1/driver/pred/> 
     PREFIX contract: <http://f1/contract/pred/>
     PREFIX team: <http://f1/team/pred/>
+    PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
+    PREFIX f1: <http://f1/>
 
     SELECT ?code ?year ?team_name WHERE
-    {
+    {   
+        ?driver_id rdf:type f1:Driver .
         ?driver_id driver:code ?code.
         ?driver_id driver:signed_for ?contract.
 
+        ?contract rdf:type f1:Contract .
         ?contract contract:year ?year.
-        ?contract contract:team ?team.
 
+        ?team_id rdf:type f1:Team .
         ?team_id team:signed ?contract.
         ?team_id team:name ?team_name.
 
@@ -390,6 +405,43 @@ def get_pilot_teams(code):
         return [(pilot['code']['value'], 
                  pilot['year']['value'],
                  pilot['team_name']['value']) for pilot in data]
+    else:
+        return []
+    
+
+def get_pilot_teammates(code):
+
+    query = """
+    PREFIX driver: <http://f1/driver/pred/> 
+    PREFIX contract: <http://f1/contract/pred/>
+    PREFIX team: <http://f1/team/pred/>
+    PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
+    PREFIX f1: <http://f1/>
+
+    select ?code2 ?surname ?forename where { 
+        ?d rdf:type f1:Driver .
+        ?d driver:teammate ?d2 .
+        ?d driver:code ?code .
+        
+        ?d2 driver:code ?code2 .
+        ?d2 driver:forename ?forename .
+        ?d2 driver:surname ?surname .
+
+        FILTER (regex(?code, "DRIVER_CODE", "i"))
+    }
+    """
+    query = query.replace("DRIVER_CODE", code)
+
+    payload_query = {"query": query}
+    response = accessor.sparql_select(body=payload_query, repo_name=repo)
+
+    response = json.loads(response)
+
+    if response['results']['bindings']:
+        data = response['results']['bindings']
+        return [(pilot['code2']['value'], 
+                 pilot['surname']['value'],
+                 pilot['forename']['value']) for pilot in data]
     else:
         return []
     
